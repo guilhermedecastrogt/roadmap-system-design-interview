@@ -1,0 +1,92 @@
+{
+  "Meta": {
+    "title": "Roadmap de Entrevistas de System Design",
+    "description": "Um roadmap open-source e bilíngue para estudar design de sistemas com foco em entrevistas."
+  },
+  "Nav": {
+    "home": "Início",
+    "topics": "Tópicos",
+    "about": "Sobre",
+    "contributing": "Contribuir",
+    "github": "GitHub",
+    "toggleTheme": "Alternar tema",
+    "language": "Idioma",
+    "skipToContent": "Pular para o conteúdo"
+  },
+  "Home": {
+    "eyebrow": "Open-source · Bilíngue · Foco em entrevistas",
+    "title": "Domine <hl>system design</hl> um bloco de cada vez.",
+    "subtitle": "Um roadmap guiado e feito para devs, que transforma a teoria espalhada de design de sistemas em um caminho claro — de DNS e balanceadores de carga até resoluções completas de entrevistas. Construído a partir de notas reais de curso e mantido como um diário de estudos público e vivo.",
+    "ctaPrimary": "Explorar o roadmap",
+    "ctaSecondary": "Ler a introdução",
+    "statsTopics": "tópicos",
+    "statsStages": "seções",
+    "statsLanguages": "idiomas",
+    "schemaCaption": "Cada tópico é conteúdo tipado e validado — então o roadmap se monta sozinho.",
+    "learnLabel": "O que você vai aprender",
+    "introEyebrow": "Sobre o projeto",
+    "introTitle": "Um caminho guiado, não uma pilha de abas abertas.",
+    "introLead": "Design de sistemas é amplo, e a maioria dos materiais te joga direto no fundo. Este repositório quebra tudo em pequenos blocos ordenados que você realmente consegue terminar — cada um explicado da mesma forma, em inglês e português.",
+    "whatTitle": "O que é",
+    "whatBody": "Um diário de estudos open-source para entrevistas de design de sistemas: blocos fundamentais, tópicos de entrevista e exemplos práticos completos — organizados em páginas de tópicos focadas.",
+    "whoTitle": "Para quem é",
+    "whoBody": "Desenvolvedores iniciantes que se preparam para suas primeiras entrevistas de design de sistemas — e qualquer um que aprende melhor com um roadmap do que com uma pilha de artigos soltos.",
+    "howTitle": "Como funciona",
+    "howBody": "Ele cresce aula a aula. Depois de cada aula, novas anotações viram um tópico — com conceitos-chave, trade-offs, relevância em entrevistas e um resumo para iniciantes, nos dois idiomas.",
+    "roadmapEyebrow": "O roadmap",
+    "roadmapTitle": "Sua jornada de aprendizado",
+    "roadmapSubtitle": "Siga o caminho dos fundamentos até resoluções completas de entrevistas. Cada nó é uma página de tópico — clique para mergulhar.",
+    "ctaTitle": "Comece pelos fundamentos.",
+    "ctaBody": "Abra o roadmap e siga de cima a baixo, ou vá direto ao bloco que você precisa.",
+    "ctaButton": "Ver todos os tópicos",
+    "emptyStage": "Em breve — o conteúdo desta seção está a caminho."
+  },
+  "Topics": {
+    "title": "Tópicos",
+    "subtitle": "Todos os tópicos do roadmap, agrupados por estágio.",
+    "all": "Todos",
+    "empty": "Nenhum tópico corresponde a este filtro ainda.",
+    "updated": "Atualizado em {date}"
+  },
+  "Topic": {
+    "backToTopics": "Todos os tópicos",
+    "interactive": "Aula interativa",
+    "onThisPage": "Nesta página",
+    "beginnerSummary": "Em um parágrafo",
+    "glossary": "Glossário",
+    "references": "Referências",
+    "updated": "Última atualização em {date}",
+    "difficultyLabel": "Dificuldade",
+    "statusLabel": "Status",
+    "stageLabel": "Estágio",
+    "notFound": "Tópico não encontrado",
+    "notFoundBody": "Este tópico ainda não existe. Ele pode estar planejado — confira o roadmap ou abra uma contribuição.",
+    "editOnGitHub": "Melhorar esta página",
+    "prevTopic": "Anterior",
+    "nextTopic": "Próximo"
+  },
+  "Difficulty": {
+    "beginner": "Iniciante",
+    "intermediate": "Intermediário",
+    "advanced": "Avançado"
+  },
+  "Status": {
+    "planned": "Planejado",
+    "in-progress": "Em andamento",
+    "published": "Publicado"
+  },
+  "About": {
+    "title": "Sobre este projeto",
+    "subtitle": "O que é este repositório, para quem ele serve e como foi construído."
+  },
+  "Contributing": {
+    "title": "Contribuir",
+    "subtitle": "Explicações, correções, diagramas, exemplos e traduções são todos bem-vindos."
+  },
+  "Footer": {
+    "tagline": "Um diário de estudos open-source de design de sistemas.",
+    "builtWith": "Construído com Next.js, next-intl e Tailwind CSS.",
+    "license": "Licença MIT",
+    "rights": "Conteúdo compartilhado para aprendizado."
+  }
+}

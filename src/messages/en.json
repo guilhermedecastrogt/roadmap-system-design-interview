@@ -1,0 +1,92 @@
+{
+  "Meta": {
+    "title": "System Design Interview Roadmap",
+    "description": "A bilingual, open-source roadmap for studying system design with a focus on interviews."
+  },
+  "Nav": {
+    "home": "Home",
+    "topics": "Topics",
+    "about": "About",
+    "contributing": "Contributing",
+    "github": "GitHub",
+    "toggleTheme": "Toggle theme",
+    "language": "Language",
+    "skipToContent": "Skip to content"
+  },
+  "Home": {
+    "eyebrow": "Open-source · Bilingual · Interview-focused",
+    "title": "Master <hl>system design</hl> one building block at a time.",
+    "subtitle": "A guided, developer-first roadmap that turns scattered system design theory into a clear path — from DNS and load balancers to full interview walkthroughs. Built from real course notes and kept as a public, living study log.",
+    "ctaPrimary": "Explore the roadmap",
+    "ctaSecondary": "Read the intro",
+    "statsTopics": "topics",
+    "statsStages": "sections",
+    "statsLanguages": "languages",
+    "schemaCaption": "Every topic is typed, validated content — so the roadmap builds itself.",
+    "learnLabel": "What you'll learn",
+    "introEyebrow": "About the project",
+    "introTitle": "A guided path, not a pile of open tabs.",
+    "introLead": "System design is broad, and most resources throw you straight into the deep end. This repository breaks it into small, ordered building blocks you can actually finish — each explained the same way, in English and Portuguese.",
+    "whatTitle": "What it is",
+    "whatBody": "An open-source study log for system design interviews: fundamental building blocks, interview topics, and practical end-to-end examples — structured as focused topic pages.",
+    "whoTitle": "Who it's for",
+    "whoBody": "Beginner and entry-level developers preparing for their first system design interviews — and anyone who learns better from a roadmap than from a stack of disconnected articles.",
+    "howTitle": "How it works",
+    "howBody": "It grows lesson by lesson. After each class, new notes become a topic — with key concepts, trade-offs, interview relevance, and a beginner summary, in both languages.",
+    "roadmapEyebrow": "The roadmap",
+    "roadmapTitle": "Your learning journey",
+    "roadmapSubtitle": "Follow the path from the fundamentals to full interview walkthroughs. Every node is a topic page — click any to dive in.",
+    "ctaTitle": "Start with the fundamentals.",
+    "ctaBody": "Open the roadmap and follow it top to bottom, or jump straight to the building block you need.",
+    "ctaButton": "Browse all topics",
+    "emptyStage": "Coming soon — content for this section is on the way."
+  },
+  "Topics": {
+    "title": "Topics",
+    "subtitle": "Every topic in the roadmap, grouped by stage.",
+    "all": "All",
+    "empty": "No topics match this filter yet.",
+    "updated": "Updated {date}"
+  },
+  "Topic": {
+    "backToTopics": "All topics",
+    "interactive": "Interactive lesson",
+    "onThisPage": "On this page",
+    "beginnerSummary": "In one paragraph",
+    "glossary": "Glossary",
+    "references": "References",
+    "updated": "Last updated {date}",
+    "difficultyLabel": "Difficulty",
+    "statusLabel": "Status",
+    "stageLabel": "Stage",
+    "notFound": "Topic not found",
+    "notFoundBody": "This topic doesn't exist yet. It may be planned — check the roadmap or open a contribution.",
+    "editOnGitHub": "Improve this page",
+    "prevTopic": "Previous",
+    "nextTopic": "Next"
+  },
+  "Difficulty": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "Status": {
+    "planned": "Planned",
+    "in-progress": "In progress",
+    "published": "Published"
+  },
+  "About": {
+    "title": "About this project",
+    "subtitle": "What this repository is, who it's for, and how it's built."
+  },
+  "Contributing": {
+    "title": "Contributing",
+    "subtitle": "Explanations, fixes, diagrams, examples, and translations are all welcome."
+  },
+  "Footer": {
+    "tagline": "An open-source system design study log.",
+    "builtWith": "Built with Next.js, next-intl & Tailwind CSS.",
+    "license": "MIT licensed",
+    "rights": "Content shared for learning."
+  }
+}
