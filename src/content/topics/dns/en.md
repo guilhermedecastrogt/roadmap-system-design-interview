@@ -17,11 +17,11 @@ glossary:
   - term: Resolver
     definition: "The server (usually your ISP or a public DNS like 1.1.1.1) that does the work of finding the IP and caching the answer."
   - term: Root nameserver
-    definition: "The top of the DNS hierarchy. It doesn't know IPs, but it knows where each top-level domain (.com, .org) lives."
+    definition: "The top of the DNS hierarchy. It doesn't know IPs — it points to the nameservers that handle each TLD (.com, .org)."
   - term: TLD server
     definition: "Handles a top-level domain such as .com, and points the resolver to the authoritative server for the exact domain."
   - term: Authoritative server
-    definition: "The source of truth for a domain (e.g. youtube.com). It holds the real records and returns the final IP."
+    definition: "The source of truth for a domain (e.g. youtube.com). It holds the real records and returns the requested one (usually an A/AAAA with the IP)."
   - term: Recursive query
     definition: "The client asks once and the resolver takes responsibility for returning the final, fully-resolved answer."
   - term: Iterative query
@@ -60,8 +60,9 @@ Without DNS you'd have to memorize an IP for every site you visit.
 ## Why it matters
 
 - **Humans use names, machines use IPs.** DNS is the bridge between the two.
-- **It's the first step of almost every request** — it happens *before* your request
-  ever reaches a load balancer, API, or database.
+- **It's usually the first step of a request** — before it reaches a load balancer, API,
+  or database (and skipped entirely when the answer is already cached or the connection is
+  still open).
 - **It's globally distributed and cached**, which is what keeps it fast and highly
   available even at internet scale.
 
@@ -72,19 +73,26 @@ to the whole internet:
 
 - **Resolver** — your entry point (ISP or public DNS). It coordinates the lookup and
   caches results.
-- **Root nameserver** — knows where every top-level domain lives.
+- **Root nameserver** — points to the nameservers that handle each TLD (`.com`, `.org`…).
 - **TLD server** — handles `.com`, `.org`, `.net`, … and points to the authoritative
   server.
-- **Authoritative server** — the source of truth that returns the final IP.
+- **Authoritative server** — the source of truth that returns the requested record
+  (for a website, usually an A/AAAA with the IP).
 
 Each level only knows enough to send you one step closer to the answer.
+
+> DNS records aren't only IPs: **A/AAAA** (IPv4/IPv6), **CNAME** (alias), **MX** (mail),
+> **TXT**… For normal web browsing you usually end at an **A/AAAA** record.
 
 ## Recursive vs iterative
 
 - **Recursive:** the client asks the resolver once, and the resolver takes
   responsibility for returning the final answer.
 - **Iterative:** the resolver talks to each server step by step, following referrals
-  (root → TLD → authoritative) until it gets the authoritative IP.
+  (root → TLD → authoritative) until it gets the authoritative answer.
+
+In one line: **recursive** describes the *client ↔ resolver* leg; **iterative** describes
+the *resolver ↔ hierarchy* leg. The referrals go to the **resolver**, not your browser.
 
 *(Toggle between the two in the diagram above to see the difference.)*
 
@@ -121,6 +129,6 @@ whole request path, not just the server.
 
 ## Class notes
 
-- DNS = name → IP, resolved through a hierarchy (resolver → root → TLD → authoritative).
-- Recursive = resolver does the work for you; iterative = resolver walks the chain.
+- DNS = name → record (usually an IP), resolved through a hierarchy (resolver → root → TLD → authoritative).
+- Recursive = client ↔ resolver (resolver does the work); iterative = resolver ↔ hierarchy (follows referrals).
 - Caching + TTL is *why* DNS feels instant — most lookups never reach the root.

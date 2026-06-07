@@ -17,11 +17,11 @@ glossary:
   - term: Resolver
     definition: "O servidor (geralmente seu provedor ou um DNS público como 1.1.1.1) que faz o trabalho de encontrar o IP e guardar a resposta em cache."
   - term: Servidor raiz (root)
-    definition: "O topo da hierarquia DNS. Ele não conhece os IPs, mas sabe onde fica cada domínio de topo (.com, .org)."
+    definition: "O topo da hierarquia DNS. Ele não conhece os IPs — aponta para os nameservers que cuidam de cada TLD (.com, .org)."
   - term: Servidor TLD
     definition: "Cuida de um domínio de topo como o .com e aponta o resolver para o servidor autoritativo do domínio exato."
   - term: Servidor autoritativo
-    definition: "A fonte da verdade de um domínio (ex.: youtube.com). Guarda os registros reais e devolve o IP final."
+    definition: "A fonte da verdade de um domínio (ex.: youtube.com). Guarda os registros reais e devolve o solicitado (geralmente um A/AAAA com o IP)."
   - term: Consulta recursiva
     definition: "O cliente pergunta uma vez e o resolver assume a responsabilidade de devolver a resposta final, já resolvida."
   - term: Consulta iterativa
@@ -60,8 +60,9 @@ Sem o DNS, você teria que memorizar um IP para cada site que visita.
 ## Por que importa
 
 - **Pessoas usam nomes, máquinas usam IPs.** O DNS é a ponte entre os dois.
-- **É o primeiro passo de quase toda requisição** — acontece *antes* de a sua requisição
-  chegar a um balanceador, API ou banco de dados.
+- **Geralmente é o primeiro passo de uma requisição** — antes de chegar a um balanceador,
+  API ou banco de dados (e é pulado quando a resposta já está em cache ou a conexão ainda
+  está aberta).
 - **É distribuído globalmente e cacheado**, o que o mantém rápido e altamente disponível
   mesmo na escala da internet.
 
@@ -72,19 +73,27 @@ permite escalar para a internet inteira:
 
 - **Resolver** — seu ponto de entrada (provedor ou DNS público). Coordena a busca e
   guarda os resultados em cache.
-- **Servidor raiz (root)** — sabe onde fica cada domínio de topo.
+- **Servidor raiz (root)** — aponta para os nameservers que cuidam de cada TLD
+  (`.com`, `.org`…).
 - **Servidor TLD** — cuida de `.com`, `.org`, `.net`… e aponta para o servidor
   autoritativo.
-- **Servidor autoritativo** — a fonte da verdade que devolve o IP final.
+- **Servidor autoritativo** — a fonte da verdade que devolve o registro solicitado
+  (para um site, geralmente um A/AAAA com o IP).
 
 Cada nível sabe apenas o suficiente para te levar um passo mais perto da resposta.
+
+> Registros DNS não são só IPs: **A/AAAA** (IPv4/IPv6), **CNAME** (apelido), **MX**
+> (e-mail), **TXT**… Para navegação web você normalmente termina em um registro **A/AAAA**.
 
 ## Recursiva vs iterativa
 
 - **Recursiva:** o cliente pergunta uma vez ao resolver, e o resolver assume a
   responsabilidade de devolver a resposta final.
 - **Iterativa:** o resolver fala com cada servidor passo a passo, seguindo
-  encaminhamentos (root → TLD → autoritativo) até obter o IP autoritativo.
+  encaminhamentos (root → TLD → autoritativo) até obter a resposta autoritativa.
+
+Em uma linha: **recursiva** é a relação *cliente ↔ resolver*; **iterativa** é a relação
+*resolver ↔ hierarquia*. Os encaminhamentos vão para o **resolver**, não para o navegador.
 
 *(Alterne entre as duas no diagrama acima para ver a diferença.)*
 
@@ -125,6 +134,6 @@ todo o caminho da requisição, não só no servidor.
 
 ## Notas de aula
 
-- DNS = nome → IP, resolvido por uma hierarquia (resolver → root → TLD → autoritativo).
-- Recursiva = o resolver faz o trabalho por você; iterativa = o resolver percorre a cadeia.
+- DNS = nome → registro (geralmente um IP), resolvido por uma hierarquia (resolver → root → TLD → autoritativo).
+- Recursiva = cliente ↔ resolver (o resolver faz o trabalho); iterativa = resolver ↔ hierarquia (segue encaminhamentos).
 - Cache + TTL é *por que* o DNS parece instantâneo — a maioria das buscas nunca chega ao root.

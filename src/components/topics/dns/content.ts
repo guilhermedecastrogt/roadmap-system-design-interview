@@ -105,7 +105,7 @@ const en: DnsContent = {
       label: 'Root',
       sublabel: '. (root nameserver)',
       detail:
-        'The top of the hierarchy. It doesn’t know the IP, but it knows where every top-level domain (.com, .org, .net) can be found.',
+        'The top of the hierarchy. It doesn’t know the IP — it points the resolver to the nameservers that handle each TLD (.com, .org…).',
     },
     tld: {
       label: 'TLD server',
@@ -117,7 +117,7 @@ const en: DnsContent = {
       label: 'Authoritative',
       sublabel: 'youtube.com',
       detail:
-        'The source of truth for youtube.com. It holds the actual DNS records and returns the final IP address.',
+        'The source of truth for youtube.com. It holds the real DNS records and returns the requested one — for a website, usually an A/AAAA record with the IP.',
     },
   },
   iterative: [
@@ -146,8 +146,8 @@ const en: DnsContent = {
       text: 'The resolver asks the authoritative server for the final answer.',
     },
     {
-      title: 'Authoritative returns the IP',
-      text: 'The authoritative server responds with the IP address (e.g. 142.250.x.x).',
+      title: 'Authoritative returns the record',
+      text: 'The authoritative server responds with the record — for a website, the IP (e.g. 142.250.x.x).',
     },
     {
       title: 'Resolver answers your browser',
@@ -170,29 +170,30 @@ const en: DnsContent = {
   ],
   comparison: {
     title: 'Recursive vs Iterative',
-    subtitle: 'Two ways the same answer gets found — from different points of view.',
+    subtitle:
+      'Two relationships inside one lookup — recursive is client ↔ resolver, iterative is resolver ↔ hierarchy.',
     recursive: 'Recursive',
     iterative: 'Iterative',
     rows: [
       {
-        aspect: 'Who does the work',
-        recursive: 'The resolver, fully on your behalf',
-        iterative: 'The resolver walks the chain itself, hop by hop',
+        aspect: 'The relationship',
+        recursive: 'Client → resolver',
+        iterative: 'Resolver → root → TLD → authoritative',
       },
       {
-        aspect: 'What the client gets',
-        recursive: 'The final, fully-resolved IP',
-        iterative: 'A referral at each step until the authoritative IP',
+        aspect: 'Who follows the chain',
+        recursive: 'The resolver, on your behalf',
+        iterative: 'The resolver itself, hop by hop',
       },
       {
-        aspect: 'Where it happens',
-        recursive: 'Between client and resolver',
-        iterative: 'Between resolver and root → TLD → authoritative',
+        aspect: 'Reply to each query',
+        recursive: 'The final answer (the record)',
+        iterative: 'A referral to the next server, until the authoritative record',
       },
       {
-        aspect: 'Effort',
-        recursive: 'Heavier on the resolver',
-        iterative: 'Spread across the hierarchy',
+        aspect: 'Who sees the referrals',
+        recursive: 'You just get the answer',
+        iterative: 'The resolver — not the client',
       },
     ],
   },
@@ -259,7 +260,7 @@ const ptBR: DnsContent = {
       label: 'Root',
       sublabel: '. (servidor raiz)',
       detail:
-        'O topo da hierarquia. Ele não sabe o IP, mas sabe onde encontrar cada domínio de topo (.com, .org, .net).',
+        'O topo da hierarquia. Ele não sabe o IP — aponta o resolver para os nameservers que cuidam de cada TLD (.com, .org…).',
     },
     tld: {
       label: 'Servidor TLD',
@@ -271,7 +272,7 @@ const ptBR: DnsContent = {
       label: 'Autoritativo',
       sublabel: 'youtube.com',
       detail:
-        'A fonte da verdade para youtube.com. Ele guarda os registros DNS reais e devolve o endereço IP final.',
+        'A fonte da verdade para youtube.com. Guarda os registros DNS reais e devolve o solicitado — para um site, geralmente um registro A/AAAA com o IP.',
     },
   },
   iterative: [
@@ -300,8 +301,8 @@ const ptBR: DnsContent = {
       text: 'O resolver pede a resposta final ao servidor autoritativo.',
     },
     {
-      title: 'Autoritativo devolve o IP',
-      text: 'O servidor autoritativo responde com o endereço IP (ex.: 142.250.x.x).',
+      title: 'Autoritativo devolve o registro',
+      text: 'O servidor autoritativo responde com o registro — para um site, o IP (ex.: 142.250.x.x).',
     },
     {
       title: 'Resolver responde ao navegador',
@@ -324,29 +325,30 @@ const ptBR: DnsContent = {
   ],
   comparison: {
     title: 'Recursiva vs Iterativa',
-    subtitle: 'Duas formas de encontrar a mesma resposta — de pontos de vista diferentes.',
+    subtitle:
+      'Duas relações dentro de uma mesma busca — recursiva é cliente ↔ resolver, iterativa é resolver ↔ hierarquia.',
     recursive: 'Recursiva',
     iterative: 'Iterativa',
     rows: [
       {
-        aspect: 'Quem faz o trabalho',
-        recursive: 'O resolver, totalmente por você',
-        iterative: 'O próprio resolver percorre a cadeia, salto a salto',
+        aspect: 'A relação',
+        recursive: 'Cliente → resolver',
+        iterative: 'Resolver → root → TLD → autoritativo',
       },
       {
-        aspect: 'O que o cliente recebe',
-        recursive: 'O IP final, totalmente resolvido',
-        iterative: 'Um encaminhamento a cada passo até o IP autoritativo',
+        aspect: 'Quem percorre a cadeia',
+        recursive: 'O resolver, por você',
+        iterative: 'O próprio resolver, salto a salto',
       },
       {
-        aspect: 'Onde acontece',
-        recursive: 'Entre cliente e resolver',
-        iterative: 'Entre resolver e root → TLD → autoritativo',
+        aspect: 'Resposta de cada consulta',
+        recursive: 'A resposta final (o registro)',
+        iterative: 'Um encaminhamento ao próximo servidor, até o registro autoritativo',
       },
       {
-        aspect: 'Esforço',
-        recursive: 'Mais pesado no resolver',
-        iterative: 'Distribuído pela hierarquia',
+        aspect: 'Quem vê os encaminhamentos',
+        recursive: 'Você só recebe a resposta',
+        iterative: 'O resolver — não o cliente',
       },
     ],
   },
