@@ -101,13 +101,13 @@ const en: CdnContent = {
     next: 'Next',
     tapHint: 'Tap any component to see what it does',
     diagramTitle: 'The CDN request flow',
-    flowHint: 'Origin registers & replicates content; the client is routed to the nearest edge.',
+    flowHint: 'The CDN is configured with the origin & cache rules; the client is routed to the best nearby edge.',
   },
   packets: {
     register: 'content map',
     content: 'content',
     ask: 'where?',
-    dest: 'nearest edge',
+    dest: 'best edge',
     request: 'request',
     clean: 'clean request',
   },
@@ -134,7 +134,7 @@ const en: CdnContent = {
       label: 'Scrubbers',
       sublabel: 'traffic filtering',
       detail:
-        'Inspect incoming traffic and drop malicious requests (e.g. DDoS) before they reach the edge. Optional — but without them the edge is more exposed.',
+        'Inspect incoming traffic and drop malicious requests (WAF / DDoS) before they reach the edge. A common security add-on — not part of the basic CDN concept.',
     },
     edge: {
       label: 'Edge / Proxy',
@@ -157,8 +157,8 @@ const en: CdnContent = {
   },
   flow: [
     {
-      title: 'Origin registers its content',
-      text: 'The origin tells the routing system where each content item lives.',
+      title: 'Origin & cache rules configured',
+      text: 'You point the CDN at your origin and set cache rules, so routing knows where to fetch content.',
     },
     {
       title: 'Content is replicated to the edge',
@@ -169,8 +169,8 @@ const en: CdnContent = {
       text: 'The client asks the routing system where to get the content.',
     },
     {
-      title: 'Routing returns the nearest edge',
-      text: 'The routing system replies with the best — usually closest — edge server.',
+      title: 'Routing returns the best edge',
+      text: 'The routing system replies with the best edge — usually the closest, healthy one.',
     },
     {
       title: 'Client sends the request',
@@ -208,8 +208,8 @@ const en: CdnContent = {
     subtitle: 'Two ways content reaches the edge.',
     push: 'Push CDN',
     pull: 'Pull CDN',
-    pushHint: 'You proactively push content to edges ahead of time. Best for known, popular, static assets.',
-    pullHint: 'The edge fetches from the origin on the first request, then caches it. Best for unpredictable content.',
+    pushHint: 'You pre-load (pre-warm) content to edges ahead of time. Good for launches, large files, and avoiding a slow first hit.',
+    pullHint: 'The edge fetches from the origin on the first request, then caches it — the common default, great for most web assets.',
     pushBtn: 'Push content',
     pullBtn: 'Request content',
     pullAgainBtn: 'Request again',
@@ -250,13 +250,13 @@ const ptBR: CdnContent = {
     next: 'Próximo',
     tapHint: 'Toque em um componente para ver o que ele faz',
     diagramTitle: 'O fluxo de requisição do CDN',
-    flowHint: 'A origem registra e replica o conteúdo; o cliente é roteado para o edge mais próximo.',
+    flowHint: 'A CDN é configurada com o origin e regras de cache; o cliente é roteado para o melhor edge próximo.',
   },
   packets: {
     register: 'mapa de conteúdo',
     content: 'conteúdo',
     ask: 'onde?',
-    dest: 'edge mais próximo',
+    dest: 'melhor edge',
     request: 'requisição',
     clean: 'requisição limpa',
   },
@@ -283,7 +283,7 @@ const ptBR: CdnContent = {
       label: 'Scrubbers',
       sublabel: 'filtro de tráfego',
       detail:
-        'Inspecionam o tráfego de entrada e descartam requisições maliciosas (ex.: DDoS) antes que cheguem ao edge. Opcionais — mas sem eles o edge fica mais exposto.',
+        'Inspecionam o tráfego de entrada e descartam requisições maliciosas (WAF / DDoS) antes que cheguem ao edge. Um add-on de segurança comum — não faz parte do conceito básico de CDN.',
     },
     edge: {
       label: 'Edge / Proxy',
@@ -306,8 +306,8 @@ const ptBR: CdnContent = {
   },
   flow: [
     {
-      title: 'A origem registra seu conteúdo',
-      text: 'A origem informa ao sistema de roteamento onde está cada item de conteúdo.',
+      title: 'Origem e regras de cache configuradas',
+      text: 'Você aponta a CDN para o origin e define regras de cache, então o roteamento sabe onde buscar o conteúdo.',
     },
     {
       title: 'O conteúdo é replicado ao edge',
@@ -318,8 +318,8 @@ const ptBR: CdnContent = {
       text: 'O cliente pergunta ao sistema de roteamento onde obter o conteúdo.',
     },
     {
-      title: 'Roteamento devolve o edge mais próximo',
-      text: 'O sistema de roteamento responde com o melhor — geralmente o mais próximo — servidor de edge.',
+      title: 'Roteamento devolve o melhor edge',
+      text: 'O sistema de roteamento responde com o melhor edge — geralmente o mais próximo e saudável.',
     },
     {
       title: 'Cliente envia a requisição',
@@ -357,8 +357,8 @@ const ptBR: CdnContent = {
     subtitle: 'Duas formas de o conteúdo chegar ao edge.',
     push: 'Push CDN',
     pull: 'Pull CDN',
-    pushHint: 'Você empurra o conteúdo aos edges com antecedência. Melhor para ativos estáticos conhecidos e populares.',
-    pullHint: 'O edge busca da origem na primeira requisição e depois faz cache. Melhor para conteúdo imprevisível.',
+    pushHint: 'Você pré-carrega (pré-aquece) o conteúdo nos edges com antecedência. Bom para lançamentos, arquivos grandes e evitar um primeiro acesso lento.',
+    pullHint: 'O edge busca da origem na primeira requisição e depois faz cache — o padrão mais comum, ótimo para a maioria dos assets web.',
     pushBtn: 'Empurrar conteúdo',
     pullBtn: 'Pedir conteúdo',
     pullAgainBtn: 'Pedir de novo',
