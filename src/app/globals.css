@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Font families are provided by next/font (see app/[locale]/layout.tsx);
+       --font-display, --font-sans and --font-mono are set there. */
+
+    /* Light theme — calm, paper-like, low chroma. */
+    --bg: 250 250 249;
+    --surface: 255 255 255;
+    --surface-2: 245 245 244;
+    --border: 231 229 228;
+    --fg: 28 25 23;
+    --muted: 120 113 108;
+    --accent: 13 110 96;
+    --accent-fg: 255 255 255;
+  }
+
+  .dark {
+    /* Dark theme — deep slate, high legibility, single accent. */
+    --bg: 12 14 17;
+    --surface: 20 23 28;
+    --surface-2: 28 32 38;
+    --border: 39 44 52;
+    --fg: 233 235 238;
+    --muted: 148 155 165;
+    --accent: 45 212 191;
+    --accent-fg: 8 12 14;
+  }
+
+  * {
+    border-color: rgb(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Honor reduced-motion preferences. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      animation-delay: 0 !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0 !important;
+    }
+  }
+
+  ::selection {
+    background-color: rgb(var(--accent) / 0.25);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/*
+ * `.prose-content` styles Markdown rendered by react-markdown.
+ * Kept hand-written (instead of the typography plugin) to stay on the
+ * design system's tokens and avoid an extra dependency.
+ */
+@layer components {
+  .prose-content {
+    @apply text-[0.975rem] leading-7 text-fg/90;
+  }
+  .prose-content > * + * {
+    @apply mt-4;
+  }
+  .prose-content h2 {
+    @apply mt-10 scroll-mt-24 text-xl font-semibold tracking-tight text-fg;
+  }
+  .prose-content h3 {
+    @apply mt-7 text-base font-semibold text-fg;
+  }
+  .prose-content p {
+    @apply text-fg/90;
+  }
+  .prose-content a {
+    @apply font-medium text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+  }
+  .prose-content strong {
+    @apply font-semibold text-fg;
+  }
+  .prose-content ul {
+    @apply list-disc space-y-1.5 pl-5 marker:text-muted;
+  }
+  .prose-content ol {
+    @apply list-decimal space-y-1.5 pl-5 marker:text-muted;
+  }
+  .prose-content li > ul,
+  .prose-content li > ol {
+    @apply mt-1.5;
+  }
+  .prose-content blockquote {
+    @apply border-l-2 border-accent/50 bg-surface-2/60 py-1 pl-4 text-fg/80 italic;
+  }
+  .prose-content code {
+    @apply rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[0.85em] text-fg;
+  }
+  .prose-content pre {
+    @apply overflow-x-auto rounded-lg border border-border bg-surface-2 p-4 text-[0.85em] leading-6;
+  }
+  .prose-content pre code {
+    @apply bg-transparent p-0;
+  }
+  .prose-content table {
+    @apply block w-full overflow-x-auto text-sm;
+  }
+  .prose-content th {
+    @apply border-b border-border px-3 py-2 text-left font-semibold;
+  }
+  .prose-content td {
+    @apply border-b border-border px-3 py-2 align-top;
+  }
+  .prose-content hr {
+    @apply my-8 border-border;
+  }
+}
+
+/* ============================================================
+   Atmosphere & effects — "engineering blueprint" homepage
+   ============================================================ */
+@layer utilities {
+  /* Accent gradient text. */
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      rgb(var(--accent)),
+      rgb(var(--fg)) 65%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Fine blueprint grid, faded toward the edges with a radial mask. */
+  .bg-blueprint {
+    background-image:
+      linear-gradient(to right, rgb(var(--fg) / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--fg) / 0.045) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 75% 65% at 50% 0%,
+      #000 30%,
+      transparent 78%
+    );
+    mask-image: radial-gradient(
+      ellipse 75% 65% at 50% 0%,
+      #000 30%,
+      transparent 78%
+    );
+  }
+
+  /* Soft blurred colour field behind the hero. */
+  .aurora {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  /* Film-grain overlay — applied to a fixed full-viewport element. */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+  }
+  .dark .grain {
+    opacity: 0.05;
+  }
+
+  /* Animated conic ring used as a gradient border on the hero card. */
+  .conic-ring {
+    background-image: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgb(var(--accent) / 0.55) 60deg,
+      transparent 140deg,
+      transparent 360deg
+    );
+  }
+
+  /* Glassy surface for premium cards. */
+  .glass {
+    background-color: rgb(var(--surface) / 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .delay-1 { animation-delay: 0.08s; }
+  .delay-2 { animation-delay: 0.16s; }
+  .delay-3 { animation-delay: 0.24s; }
+  .delay-4 { animation-delay: 0.32s; }
+  .delay-5 { animation-delay: 0.4s; }
+  .delay-6 { animation-delay: 0.48s; }
+
+  /* Flowing dashes along an active flow-diagram edge. */
+  .flow-dash {
+    stroke-dasharray: 3 7;
+    animation: flow-dash-move 0.6s linear infinite;
+  }
+  @keyframes flow-dash-move {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+}
