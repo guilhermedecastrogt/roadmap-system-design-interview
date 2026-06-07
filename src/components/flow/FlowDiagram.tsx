@@ -19,9 +19,14 @@ export type FlowNode = {
   col: number;
 };
 
-export type FlowEdge = { from: string; to: string };
+export type FlowEdge = { from: string; to: string; dashed?: boolean };
 
-export type EdgeKind = 'request' | 'response' | 'referral';
+export type EdgeKind =
+  | 'request'
+  | 'response'
+  | 'referral'
+  | 'replicate'
+  | 'control';
 
 export type ActiveEdge = {
   from: string;
@@ -35,6 +40,8 @@ const kindColor: Record<EdgeKind, string> = {
   request: 'rgb(var(--accent))',
   response: 'rgb(16 185 129)', // emerald
   referral: 'rgb(245 158 11)', // amber
+  replicate: 'rgb(139 92 246)', // violet
+  control: 'rgb(148 163 184)', // slate
 };
 
 /**
@@ -53,6 +60,7 @@ export function FlowDiagram({
   packetLabel,
   focusId,
   tick = 0,
+  showTopology = true,
 }: {
   nodes: FlowNode[];
   edges: FlowEdge[];
@@ -65,6 +73,12 @@ export function FlowDiagram({
   focusId?: string | null;
   /** Changes per step to force the packet animation to replay. */
   tick?: number | string;
+  /**
+   * Draw the faint static connections between all nodes. Turn off for dense
+   * graphs (e.g. CDN) where only the active step's arrow should show, so the
+   * flow stays readable.
+   */
+  showTopology?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeEls = useRef<Map<string, HTMLElement>>(new Map());
@@ -139,22 +153,24 @@ export function FlowDiagram({
         </defs>
 
         {/* Faint topology */}
-        {edges.map((e) => {
-          const a = centers[e.from];
-          const b = centers[e.to];
-          if (!a || !b) return null;
-          return (
-            <line
-              key={`${e.from}-${e.to}`}
-              x1={a.x}
-              y1={a.y}
-              x2={b.x}
-              y2={b.y}
-              stroke="rgb(var(--border))"
-              strokeWidth={1.5}
-            />
-          );
-        })}
+        {showTopology &&
+          edges.map((e) => {
+            const a = centers[e.from];
+            const b = centers[e.to];
+            if (!a || !b) return null;
+            return (
+              <line
+                key={`${e.from}-${e.to}`}
+                x1={a.x}
+                y1={a.y}
+                x2={b.x}
+                y2={b.y}
+                stroke="rgb(var(--border))"
+                strokeWidth={1.5}
+                strokeDasharray={e.dashed ? '4 5' : undefined}
+              />
+            );
+          })}
 
         {/* Active edge */}
         {activeFrom && activeTo && (
@@ -189,28 +205,30 @@ export function FlowDiagram({
         {activeFrom && activeTo && packetLabel && (
           <motion.div
             key={`${active!.from}-${active!.to}-${tick}`}
-            className="pointer-events-none absolute left-0 top-0 z-20 flex flex-col items-center"
-            initial={{ x: activeFrom.x - 22, y: activeFrom.y - 22, opacity: 0, scale: 0.5 }}
-            animate={{ x: activeTo.x - 22, y: activeTo.y - 22, opacity: 1, scale: 1 }}
+            className="pointer-events-none absolute left-0 top-0 z-20"
+            initial={{ x: activeFrom.x - 16, y: activeFrom.y - 16, opacity: 0, scale: 0.5 }}
+            animate={{ x: activeTo.x - 16, y: activeTo.y - 16, opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span
-              className="grid h-11 w-11 place-items-center rounded-full text-white shadow-lg"
+            <div
+              className="relative grid h-8 w-8 place-items-center rounded-full text-white shadow-lg"
               style={{
                 background: activeColor,
                 boxShadow: `0 0 18px ${activeColor}`,
               }}
             >
               <motion.span
-                className="h-2.5 w-2.5 rounded-full bg-white"
+                className="h-2 w-2 rounded-full bg-white"
                 animate={{ scale: [1, 1.5, 1] }}
                 transition={{ repeat: Infinity, duration: 1 }}
               />
-            </span>
-            <span className="mt-1 whitespace-nowrap rounded-md border border-border bg-bg/90 px-1.5 py-0.5 font-mono text-[0.65rem] text-fg shadow-sm backdrop-blur">
-              {packetLabel}
-            </span>
+              {packetLabel && (
+                <span className="absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded-md border border-border bg-bg/95 px-1.5 py-0.5 font-mono text-[0.65rem] text-fg shadow-sm">
+                  {packetLabel}
+                </span>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -234,12 +252,13 @@ export function FlowDiagram({
                   animate={{ scale: isActive ? 1.05 : 1 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   className={cn(
-                    'group relative flex w-full max-w-[13rem] items-center gap-3 rounded-xl border bg-surface px-3 py-2.5 text-left transition-colors',
+                    'group relative flex w-full max-w-[15rem] items-center gap-3 rounded-xl border bg-surface px-3 py-2.5 text-left transition-all duration-300',
                     isActive
                       ? 'border-accent shadow-lg shadow-accent/20'
                       : isVisited
                         ? 'border-accent/40'
                         : 'border-border hover:border-accent/40',
+                    !isActive && !isVisited && !isSelected && 'opacity-55',
                     isSelected && 'ring-2 ring-accent ring-offset-2 ring-offset-bg',
                   )}
                 >
@@ -262,11 +281,11 @@ export function FlowDiagram({
                     <Icon className="h-[1.15rem] w-[1.15rem]" aria-hidden />
                   </span>
                   <span className="min-w-0">
-                    <span className="block truncate text-sm font-semibold text-fg">
+                    <span className="block text-sm font-semibold leading-tight text-fg">
                       {n.label}
                     </span>
                     {n.sublabel && (
-                      <span className="block truncate font-mono text-[0.7rem] text-muted">
+                      <span className="mt-0.5 block font-mono text-[0.7rem] leading-tight text-muted">
                         {n.sublabel}
                       </span>
                     )}
