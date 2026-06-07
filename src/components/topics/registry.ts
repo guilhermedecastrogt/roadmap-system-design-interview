@@ -1,6 +1,7 @@
 import { type ComponentType } from 'react';
 import { type Locale } from '@/i18n/routing';
 import { DnsLesson } from './dns/DnsLesson';
+import { CdnLesson } from './cdn/CdnLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
@@ -9,4 +10,5 @@ import { DnsLesson } from './dns/DnsLesson';
  */
 export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>> = {
   dns: DnsLesson,
+  cdn: CdnLesson,
 };
