@@ -4,6 +4,7 @@ import { DnsLesson } from './dns/DnsLesson';
 import { CdnLesson } from './cdn/CdnLesson';
 import { LbLesson } from './load-balancer/LbLesson';
 import { CacheLesson } from './caching/CacheLesson';
+import { MqLesson } from './message-queue/MqLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
@@ -15,4 +16,5 @@ export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>>
   cdn: CdnLesson,
   'load-balancer': LbLesson,
   caching: CacheLesson,
+  'message-queue': MqLesson,
 };
