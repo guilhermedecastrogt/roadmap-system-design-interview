@@ -1,19 +1,24 @@
 import { type Locale } from '@/i18n/routing';
-import { DnsExperience } from './DnsExperience';
-import { DnsComparison } from './DnsComparison';
-import { CacheTtlSim } from './CacheTtlSim';
+import { DnsHero } from './DnsHero';
+import { DnsAnatomy } from './DnsAnatomy';
+import { DnsJourney } from './DnsJourney';
+import { DnsCacheLab } from './DnsCacheLab';
+import { DnsRecords } from './DnsRecords';
 
 /**
  * The full interactive DNS lesson, mounted by the topic page above the
- * Markdown prose. Composes the three interactive blocks; each future topic can
- * provide its own `*Lesson` and register it in `components/topics/registry`.
+ * Markdown prose. Five acts: the phonebook idea, the anatomy of a name
+ * (mind map), the journey of a lookup (animated flow), the cache & TTL lab,
+ * and the record types.
  */
 export function DnsLesson({ locale }: { locale: Locale }) {
   return (
-    <div className="space-y-14">
-      <DnsExperience locale={locale} />
-      <DnsComparison locale={locale} />
-      <CacheTtlSim locale={locale} />
+    <div className="space-y-16">
+      <DnsHero locale={locale} />
+      <DnsAnatomy locale={locale} />
+      <DnsJourney locale={locale} />
+      <DnsCacheLab locale={locale} />
+      <DnsRecords locale={locale} />
     </div>
   );
 }
