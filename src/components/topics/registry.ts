@@ -6,11 +6,12 @@ import { LbLesson } from './load-balancer/LbLesson';
 import { CacheLesson } from './caching/CacheLesson';
 import { MqLesson } from './message-queue/MqLesson';
 import { RlLesson } from './rate-limiting/RlLesson';
+import { GwLesson } from './api-gateway/GwLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
  * Markdown prose on its topic page. Add new topics here as they get an
- * interactive lesson (API Gateway, …).
+ * interactive lesson.
  */
 export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>> = {
   dns: DnsLesson,
@@ -19,4 +20,5 @@ export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>>
   caching: CacheLesson,
   'message-queue': MqLesson,
   'rate-limiting-throttling': RlLesson,
+  'api-gateway': GwLesson,
 };
