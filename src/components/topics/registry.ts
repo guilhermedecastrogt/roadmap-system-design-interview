@@ -7,6 +7,8 @@ import { CacheLesson } from './caching/CacheLesson';
 import { MqLesson } from './message-queue/MqLesson';
 import { RlLesson } from './rate-limiting/RlLesson';
 import { GwLesson } from './api-gateway/GwLesson';
+import { DbLesson } from './databases/DbLesson';
+import { CapLesson } from './cap-theorem/CapLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
@@ -21,4 +23,6 @@ export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>>
   'message-queue': MqLesson,
   'rate-limiting-throttling': RlLesson,
   'api-gateway': GwLesson,
+  databases: DbLesson,
+  'cap-theorem': CapLesson,
 };
