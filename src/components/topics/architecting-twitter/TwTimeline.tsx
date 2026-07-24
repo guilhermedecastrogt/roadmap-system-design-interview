@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Database, Rss, Smartphone, Users, Zap } from 'lucide-react';
+import { Database, Rss, Smartphone, Star, Users, Zap } from 'lucide-react';
 import { type Locale } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { SceneRails, Packet, type Pt } from '../cdn/scene';
@@ -228,6 +228,39 @@ export function TwTimeline({ locale }: { locale: Locale }) {
           <p className="mt-4 rounded-lg border border-accent/30 bg-accent/[0.06] px-3 py-2.5 text-xs leading-relaxed text-fg/85">
             {f.hybrid}
           </p>
+
+          {/* real-world usage */}
+          <div className="mt-5">
+            <p className="mb-2 text-sm font-semibold text-fg">{f.realWorld.title}</p>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[460px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="py-2 pr-3 font-mono text-[0.62rem] uppercase tracking-wide text-muted">{f.realWorld.cols.system}</th>
+                    <th className="py-2 pr-3 font-mono text-[0.62rem] uppercase tracking-wide text-muted">{f.realWorld.cols.approach}</th>
+                    <th className="py-2 font-mono text-[0.62rem] uppercase tracking-wide text-muted">{f.realWorld.cols.note}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {f.realWorld.rows.map((r) => (
+                    <tr key={r.system} className="border-b border-border/60 last:border-0">
+                      <td className="py-2.5 pr-3 align-top text-sm font-semibold text-fg">{r.system}</td>
+                      <td className="py-2.5 pr-3 align-top">
+                        <span className="whitespace-nowrap rounded-full bg-accent/15 px-2 py-0.5 text-[0.68rem] font-semibold text-accent">
+                          {r.approach}
+                        </span>
+                      </td>
+                      <td className="py-2.5 align-top text-xs leading-relaxed text-muted">{r.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 flex items-start gap-2 rounded-lg border border-violet-500/30 bg-violet-500/[0.06] px-3 py-2.5 text-xs leading-relaxed text-fg/85">
+              <Star className="mt-0.5 h-3.5 w-3.5 shrink-0 text-violet-500" aria-hidden />
+              {f.realWorld.celebrities}
+            </p>
+          </div>
         </TwStage>
       </div>
     </div>
