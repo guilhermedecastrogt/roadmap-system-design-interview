@@ -9,6 +9,8 @@ import { RlLesson } from './rate-limiting/RlLesson';
 import { GwLesson } from './api-gateway/GwLesson';
 import { DbLesson } from './databases/DbLesson';
 import { CapLesson } from './cap-theorem/CapLesson';
+import { DsLesson } from './data-storage/DsLesson';
+import { TwLesson } from './architecting-twitter/TwLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
@@ -25,4 +27,6 @@ export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>>
   'api-gateway': GwLesson,
   databases: DbLesson,
   'cap-theorem': CapLesson,
+  'data-storage': DsLesson,
+  'architecting-twitter': TwLesson,
 };
