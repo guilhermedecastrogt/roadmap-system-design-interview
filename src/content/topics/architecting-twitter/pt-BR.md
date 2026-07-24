@@ -235,6 +235,42 @@ As preocupações operacionais são **parte do design**, não um detalhe posteri
 - **Complexidade vs escalabilidade** — cada uma dessas escolhas troca simplicidade pela capacidade de
   chegar a centenas de milhões de usuários.
 
+## Como um Staff Engineer pensaria
+
+Respostas júnior listam componentes. Respostas Staff mostram **julgamento** — como o sistema se
+comporta sob escala, falha e pressão de custo. O simulador de falhas acima é uma amostra; aqui vai o
+checklist mais amplo que vale levantar sem ser perguntado:
+
+- **Multi-region e disaster recovery** — rode em múltiplas regiões com replicação cross-region de
+  MongoDB, S3 e Kafka. Defina **RPO/RTO** (quanto de dado pode perder, em quanto tempo recupera),
+  faça failover com balanceamento global e **ensaie** o failover — um plano de DR não testado é só um
+  desejo.
+- **Hot partitions** — uma celebridade ou um tweet viral concentra carga num shard/chave. Mitigue com
+  sharding numa chave de alta cardinalidade, dividindo chaves quentes e adicionando uma pequena
+  camada de réplica de leitura/cache na frente dos dados mais quentes.
+- **O problema da celebridade** — contas com dezenas ou centenas de milhões de seguidores são
+  excluídas do fanout-on-write e puxadas na leitura. Esteja pronto para dizer o **corte de
+  seguidores** onde você troca de estratégia e como mescla os tweets puxados no feed em cache.
+- **Reprocessamento e backfill de timelines** — você *vai* precisar reconstruir timelines (bug no
+  ranking, nova feature, cache corrompido). Projete para isso: replay do Kafka ou recomputação a
+  partir da fonte da verdade, com throttling para o backfill não sufocar o tráfego ao vivo.
+- **Controle de custo do Redis** — a RAM em memória é a parte cara. Limite o tamanho da timeline (ex.
+  últimos ~800 ids), use TTLs, cacheie só feeds de usuários **ativos** e reconstrua os frios sob
+  demanda em vez de manter 100M de feeds quentes para sempre.
+- **Consistência e idempotência** — eventos podem ser entregues mais de uma vez, então os
+  consumidores (fanout, contadores, indexação) precisam ser **idempotentes**. Contadores derivam;
+  reconcilie-os periodicamente a partir da fonte da verdade em vez de confiar em incrementos para
+  sempre.
+- **Abuso, segurança e privacidade** — rate limits e detecção de spam no caminho de escrita, contas
+  privadas/protegidas que mudam a visibilidade do fanout, e exclusão que precisa propagar para
+  caches, busca e timelines (não só para a fonte da verdade).
+- **Rollout e observabilidade** — suba mudanças arriscadas atrás de flags e canaries, monitore a
+  latência p99 do feed e o lag dos consumidores como SLOs de primeira classe, e alerte quando as
+  camadas derivadas ficam velhas, não só em erros duros.
+
+Levantar três ou quatro destes sem ser perguntado é o que separa "conhece os componentes" de "seria
+confiado para ser dono do sistema."
+
 ## Relevância em entrevista
 
 - **Separe caminho de leitura do de escrita em voz alta.** "Este é um sistema read-heavy; vou

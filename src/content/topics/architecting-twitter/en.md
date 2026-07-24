@@ -229,6 +229,40 @@ Operational concerns are **part of the design**, not an afterthought:
 - **Complexity vs scalability** — every one of these choices trades simplicity for the ability to
   reach hundreds of millions of users.
 
+## How a Staff Engineer would think
+
+Junior answers list components. Staff answers show **judgment** — how the system behaves under
+scale, failure, and cost pressure. The failure simulator above is a first taste; here's the wider
+checklist worth raising unprompted:
+
+- **Multi-region & disaster recovery** — run in multiple regions with cross-region replication of
+  MongoDB, S3, and Kafka. Define **RPO/RTO** (how much data you can lose, how fast you recover),
+  fail over with global load balancing, and rehearse the failover — an untested DR plan is a wish.
+- **Hot partitions** — a celebrity or a viral tweet concentrates load on one shard/key. Mitigate by
+  sharding on a high-cardinality key, splitting hot keys, and adding a small read-replica/cache tier
+  in front of the hottest data.
+- **The celebrity problem** — accounts with tens or hundreds of millions of followers are excluded
+  from fanout-on-write and pulled in at read time. Be ready to state the **follower cutoff** where
+  you switch strategies, and how you merge pulled tweets into the cached feed.
+- **Timeline reprocessing & backfill** — you *will* need to rebuild timelines (a bug in ranking, a
+  new feature, a corrupted cache). Design for it: replay from Kafka or recompute from the source of
+  truth, throttled so backfill doesn't starve live traffic.
+- **Redis cost control** — in-memory RAM is the expensive part. Cap timeline length (e.g. last ~800
+  ids), set TTLs, only cache **active** users' feeds, and rebuild cold users on demand rather than
+  keeping 100M feeds hot forever.
+- **Consistency & idempotency** — events can be delivered more than once, so consumers (fanout,
+  counters, indexing) must be **idempotent**. Counters drift; reconcile them periodically from the
+  source of truth rather than trusting increments forever.
+- **Abuse, safety & privacy** — rate limits and spam detection on the write path, private/protected
+  accounts that change fanout visibility, and deletion that must propagate to caches, search, and
+  timelines (not just the source of truth).
+- **Rollout & observability** — ship risky changes behind flags and canaries, watch p99 feed
+  latency and consumer lag as first-class SLOs, and alert on the derived layers going stale, not
+  just on hard errors.
+
+Raising even three or four of these unprompted is what separates "knows the components" from
+"would be trusted to own the system."
+
 ## Interview relevance
 
 - **Split read path from write path out loud.** "This is a read-heavy system; I'll optimize the
