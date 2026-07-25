@@ -258,7 +258,9 @@ const en = {
     title: 'The whole system on one page',
     subtitle:
       'Before the animated flows below, here is the static big picture — every service, store, and flow at once. Skim it now; the interactive panels zoom into each path.',
-    scrollHint: 'Scroll sideways to see the full map',
+    scrollHint: 'Drag to pan · zoom with the buttons',
+    tapHint: 'Tap any node to light up its connections',
+    reset: 'Reset view',
     lbNote: 'Round Robin · Layer 7',
     legend: {
       request: 'Request / data path',
@@ -621,7 +623,9 @@ const ptBR: typeof en = {
     title: 'O sistema inteiro em uma página',
     subtitle:
       'Antes dos fluxos animados abaixo, aqui está a visão macro estática — todos os serviços, stores e fluxos de uma vez. Dê uma passada de olho agora; os painéis interativos dão zoom em cada caminho.',
-    scrollHint: 'Arraste para os lados para ver o mapa completo',
+    scrollHint: 'Arraste para mover · use os botões para dar zoom',
+    tapHint: 'Toque num nó para acender as conexões dele',
+    reset: 'Resetar visão',
     lbNote: 'Round Robin · Layer 7',
     legend: {
       request: 'Caminho de requisição / dados',
