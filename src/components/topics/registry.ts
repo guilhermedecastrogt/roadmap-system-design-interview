@@ -11,6 +11,10 @@ import { DbLesson } from './databases/DbLesson';
 import { CapLesson } from './cap-theorem/CapLesson';
 import { DsLesson } from './data-storage/DsLesson';
 import { TwLesson } from './architecting-twitter/TwLesson';
+import { ApiOverviewLesson } from './what-is-an-api/ApiOverviewLesson';
+import { RestLesson } from './rest-api/RestLesson';
+import { WhLesson } from './webhooks/WhLesson';
+import { GqlLesson } from './graphql/GqlLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
@@ -25,6 +29,10 @@ export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>>
   'message-queue': MqLesson,
   'rate-limiting-throttling': RlLesson,
   'api-gateway': GwLesson,
+  'what-is-an-api': ApiOverviewLesson,
+  'rest-api': RestLesson,
+  webhooks: WhLesson,
+  graphql: GqlLesson,
   databases: DbLesson,
   'cap-theorem': CapLesson,
   'data-storage': DsLesson,
