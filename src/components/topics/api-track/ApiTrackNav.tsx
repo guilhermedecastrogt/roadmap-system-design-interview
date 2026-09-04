@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { trackContent, type TrackNodeId } from './trackContent';
 
 /**
- * Track navigation rendered at the end of every lesson: the four steps as a
+ * Track navigation rendered at the end of every lesson: every step as a
  * progress rail, plus previous / hub / next links. The topic page already has
  * global prev/next; this one is scoped to the mini-track so the reader can move
  * inside it without leaving the page's context.
@@ -25,12 +25,14 @@ export function ApiTrackNav({ locale, current }: { locale: Locale; current: Trac
           {t.nav.trackLabel}
         </span>
         <span className="font-mono text-[0.65rem] text-muted">
-          {t.nav.stepOf.replace('{n}', String(index + 1))}
+          {t.nav.stepOf
+            .replace('{n}', String(index + 1))
+            .replace('{total}', String(steps.length))}
         </span>
       </div>
 
       {/* progress rail */}
-      <ol className="mt-3 grid gap-1.5 sm:grid-cols-4">
+      <ol className="mt-3 grid gap-1.5 sm:grid-cols-2 lg:grid-cols-5">
         {steps.map((s, i) => {
           const done = i < index;
           const isCurrent = i === index;

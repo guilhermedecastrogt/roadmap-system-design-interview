@@ -1,14 +1,14 @@
 import { type Locale } from '@/i18n/routing';
 
 /**
- * Shared content for the "API communication" mini-track: the four-step track
- * navigation, the cross-topic communication map, and the interactive style
- * comparison. Every lesson in the track (What is an API?, REST API, Webhooks,
- * GraphQL) renders these, so the strings live here instead of being duplicated
- * in each topic's own `content.ts`.
+ * Shared content for the "API communication" mini-track: the track navigation,
+ * the cross-topic communication map, and the interactive style comparison.
+ * Every lesson in the track (What is an API?, REST API, Webhooks, GraphQL,
+ * gRPC) renders these, so the strings live here instead of being duplicated in
+ * each topic's own `content.ts`.
  */
 
-export type TrackStyleId = 'rest' | 'webhooks' | 'graphql';
+export type TrackStyleId = 'rest' | 'webhooks' | 'graphql' | 'grpc';
 export type TrackNodeId = 'overview' | TrackStyleId;
 
 export type TrackStep = {
@@ -99,10 +99,16 @@ const en: TrackContent = {
       label: 'GraphQL',
       tagline: 'Ask for exactly the fields',
     },
+    {
+      id: 'grpc',
+      slug: 'grpc',
+      label: 'gRPC',
+      tagline: 'Typed calls between services',
+    },
   ],
   nav: {
     trackLabel: 'API communication track',
-    stepOf: 'Step {n} of 4',
+    stepOf: 'Step {n} of {total}',
     prev: 'Previous',
     next: 'Next',
     hub: 'Back to the map',
@@ -153,14 +159,25 @@ const en: TrackContent = {
         oneLiner: 'The client sends the shape; the server fills it in.',
         wire: 'HTTP, usually one endpoint',
       },
+      {
+        id: 'grpc',
+        nodes: ['Service A', 'GetUser(id)', 'Service B'],
+        motion: 'forward',
+        label: 'gRPC',
+        question: 'How do two services call each other cheaply and often?',
+        initiator: 'The calling service — it looks like a local function call',
+        payload: 'A typed message, encoded as compact binary',
+        oneLiner: 'You call a method. Both sides were generated from the same contract.',
+        wire: 'HTTP/2 + Protocol Buffers',
+      },
     ],
-    note: 'These are not rivals. A single product often exposes REST for public integrations, GraphQL for its own apps, and webhooks to notify partners.',
+    note: 'These are not rivals. A single product often exposes REST for public integrations, GraphQL for its own apps, webhooks to notify partners, and gRPC between its own services.',
   },
   compare: {
-    title: 'Three styles, side by side',
+    title: 'Four styles, side by side',
     subtitle:
       'Same seven questions asked of each style. Focus one to mute the others — the differences that matter are in the first two rows.',
-    styles: { rest: 'REST', webhooks: 'Webhooks', graphql: 'GraphQL' },
+    styles: { rest: 'REST', webhooks: 'Webhooks', graphql: 'GraphQL', grpc: 'gRPC' },
     focusHint: 'Focus a style',
     allLabel: 'Show all',
     dimensions: [
@@ -171,6 +188,7 @@ const en: TrackContent = {
           rest: 'Request / response',
           webhooks: 'Event notification',
           graphql: 'Query & mutation, still request / response',
+          grpc: 'Remote procedure call, with four streaming modes',
         },
       },
       {
@@ -180,6 +198,7 @@ const en: TrackContent = {
           rest: 'The client',
           webhooks: 'The provider, after an event',
           graphql: 'The client',
+          grpc: 'The calling service; either side may then stream',
         },
       },
       {
@@ -189,6 +208,7 @@ const en: TrackContent = {
           rest: 'Client → server',
           webhooks: 'Provider → receiver',
           graphql: 'Client → GraphQL server',
+          grpc: 'Service → service, usually inside the network',
         },
       },
       {
@@ -198,6 +218,7 @@ const en: TrackContent = {
           rest: 'HTTP, JSON bodies, many endpoints',
           webhooks: 'HTTP POST to a URL you registered',
           graphql: 'HTTP, commonly a single endpoint',
+          grpc: 'HTTP/2 with binary Protocol Buffers',
         },
       },
       {
@@ -207,6 +228,7 @@ const en: TrackContent = {
           rest: 'Defined by the server, per endpoint',
           webhooks: 'An event payload defined by the provider',
           graphql: 'Defined by the client, field by field',
+          grpc: 'A typed message declared in the .proto contract',
         },
       },
       {
@@ -216,6 +238,7 @@ const en: TrackContent = {
           rest: 'Public APIs, CRUD on resources, cacheable reads',
           webhooks: 'Integrations that need to react soon after an event',
           graphql: 'Rich UIs and mobile screens with nested data needs',
+          grpc: 'Chatty internal calls, low latency, streaming',
         },
       },
       {
@@ -225,6 +248,7 @@ const en: TrackContent = {
           rest: 'Consistent endpoint design and versioning over time',
           webhooks: 'Retries, duplicates, signature checks, idempotency',
           graphql: 'Query complexity, resolver performance, caching',
+          grpc: 'Not browser-native, harder to inspect, needs codegen',
         },
       },
     ],
@@ -258,10 +282,16 @@ const ptBR: TrackContent = {
       label: 'GraphQL',
       tagline: 'Peça exatamente os campos',
     },
+    {
+      id: 'grpc',
+      slug: 'grpc',
+      label: 'gRPC',
+      tagline: 'Chamadas tipadas entre serviços',
+    },
   ],
   nav: {
     trackLabel: 'Trilha de comunicação por API',
-    stepOf: 'Passo {n} de 4',
+    stepOf: 'Passo {n} de {total}',
     prev: 'Anterior',
     next: 'Próximo',
     hub: 'Voltar ao mapa',
@@ -312,14 +342,25 @@ const ptBR: TrackContent = {
         oneLiner: 'O cliente envia o formato; o servidor preenche.',
         wire: 'HTTP, geralmente um endpoint só',
       },
+      {
+        id: 'grpc',
+        nodes: ['Serviço A', 'GetUser(id)', 'Serviço B'],
+        motion: 'forward',
+        label: 'gRPC',
+        question: 'Como dois serviços se chamam de forma barata e frequente?',
+        initiator: 'O serviço que chama — parece uma função local',
+        payload: 'Uma mensagem tipada, codificada em binário compacto',
+        oneLiner: 'Você chama um método. Os dois lados foram gerados do mesmo contrato.',
+        wire: 'HTTP/2 + Protocol Buffers',
+      },
     ],
-    note: 'Não são rivais. Um mesmo produto costuma expor REST para integrações públicas, GraphQL para os próprios apps e webhooks para avisar parceiros.',
+    note: 'Não são rivais. Um mesmo produto costuma expor REST para integrações públicas, GraphQL para os próprios apps, webhooks para avisar parceiros e gRPC entre os próprios serviços.',
   },
   compare: {
-    title: 'Três estilos, lado a lado',
+    title: 'Quatro estilos, lado a lado',
     subtitle:
       'As mesmas sete perguntas para cada estilo. Foque um para silenciar os outros — as diferenças que mais importam estão nas duas primeiras linhas.',
-    styles: { rest: 'REST', webhooks: 'Webhooks', graphql: 'GraphQL' },
+    styles: { rest: 'REST', webhooks: 'Webhooks', graphql: 'GraphQL', grpc: 'gRPC' },
     focusHint: 'Focar um estilo',
     allLabel: 'Mostrar todos',
     dimensions: [
@@ -330,6 +371,7 @@ const ptBR: TrackContent = {
           rest: 'Requisição / resposta',
           webhooks: 'Notificação de evento',
           graphql: 'Query e mutation, ainda requisição / resposta',
+          grpc: 'Chamada de procedimento remoto, com quatro modos de streaming',
         },
       },
       {
@@ -339,6 +381,7 @@ const ptBR: TrackContent = {
           rest: 'O cliente',
           webhooks: 'O provedor, após um evento',
           graphql: 'O cliente',
+          grpc: 'O serviço que chama; depois qualquer lado pode transmitir',
         },
       },
       {
@@ -348,6 +391,7 @@ const ptBR: TrackContent = {
           rest: 'Cliente → servidor',
           webhooks: 'Provedor → receptor',
           graphql: 'Cliente → servidor GraphQL',
+          grpc: 'Serviço → serviço, normalmente dentro da rede',
         },
       },
       {
@@ -357,6 +401,7 @@ const ptBR: TrackContent = {
           rest: 'HTTP, corpo em JSON, vários endpoints',
           webhooks: 'HTTP POST para uma URL que você registrou',
           graphql: 'HTTP, normalmente um único endpoint',
+          grpc: 'HTTP/2 com Protocol Buffers binário',
         },
       },
       {
@@ -366,6 +411,7 @@ const ptBR: TrackContent = {
           rest: 'Definido pelo servidor, por endpoint',
           webhooks: 'Um payload de evento definido pelo provedor',
           graphql: 'Definido pelo cliente, campo a campo',
+          grpc: 'Uma mensagem tipada declarada no contrato .proto',
         },
       },
       {
@@ -375,6 +421,7 @@ const ptBR: TrackContent = {
           rest: 'APIs públicas, CRUD de recursos, leituras cacheáveis',
           webhooks: 'Integrações que precisam reagir logo após um evento',
           graphql: 'Telas ricas e mobile com dados aninhados',
+          grpc: 'Chamadas internas frequentes, baixa latência, streaming',
         },
       },
       {
@@ -384,6 +431,7 @@ const ptBR: TrackContent = {
           rest: 'Padronizar endpoints e versionar sem quebrar clientes',
           webhooks: 'Retentativas, duplicatas, assinatura, idempotência',
           graphql: 'Complexidade da query, performance dos resolvers, cache',
+          grpc: 'Não roda nativo no navegador, difícil de inspecionar, exige codegen',
         },
       },
     ],

@@ -11,14 +11,15 @@ const STYLE_TONE: Record<TrackStyleId, Tone> = {
   rest: 'sky',
   webhooks: 'amber',
   graphql: 'violet',
+  grpc: 'emerald',
 };
 
-const STYLE_IDS: TrackStyleId[] = ['rest', 'webhooks', 'graphql'];
+const STYLE_IDS: TrackStyleId[] = ['rest', 'webhooks', 'graphql', 'grpc'];
 
 /**
- * The track-wide comparison: seven dimensions asked of REST, webhooks and
- * GraphQL. Focusing one style dims the other two so a single column can be read
- * top to bottom without the eye wandering.
+ * The track-wide comparison: seven dimensions asked of REST, webhooks, GraphQL
+ * and gRPC. Focusing one style dims the rest so a single column can be read top
+ * to bottom without the eye wandering.
  */
 export function ApiStyleCompare({ locale }: { locale: Locale }) {
   const c = trackContent[locale].compare;
@@ -66,7 +67,7 @@ export function ApiStyleCompare({ locale }: { locale: Locale }) {
         </div>
 
         {/* header (desktop only) */}
-        <div className="hidden grid-cols-[9.5rem_repeat(3,1fr)] gap-2 border-b border-border pb-2 sm:grid">
+        <div className="hidden grid-cols-[8.5rem_repeat(4,1fr)] gap-2 border-b border-border pb-2 sm:grid">
           <span />
           {STYLE_IDS.map((id) => (
             <span
@@ -91,7 +92,7 @@ export function ApiStyleCompare({ locale }: { locale: Locale }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.3, delay: Math.min(i, 4) * 0.04 }}
-              className="grid gap-1.5 py-3 sm:grid-cols-[9.5rem_repeat(3,1fr)] sm:gap-2"
+              className="grid gap-1.5 py-3 sm:grid-cols-[8.5rem_repeat(4,1fr)] sm:gap-2"
             >
               <span className="font-mono text-[0.65rem] uppercase tracking-wide text-muted">
                 {dim.label}
