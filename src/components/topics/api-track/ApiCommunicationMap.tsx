@@ -21,10 +21,11 @@ const BRANCH_TONE: Record<TrackStyleId, Tone> = {
   rest: 'sky',
   webhooks: 'amber',
   graphql: 'violet',
+  grpc: 'emerald',
 };
 
-/** Percent positions of the three stems under the hub. */
-const STEM_X = [16.6667, 50, 83.3333];
+/** Percent positions of the stems under the hub, one per branch. */
+const STEM_X = [12.5, 37.5, 62.5, 87.5];
 
 /**
  * The cross-topic map that opens every lesson in the track: the API contract at
@@ -75,10 +76,10 @@ export function ApiCommunicationMap({
           </div>
         </div>
 
-        {/* connectors (desktop) */}
-        <div className="relative hidden h-11 sm:block" aria-hidden>
+        {/* connectors (wide screens, where the branches sit in one row) */}
+        <div className="relative hidden h-11 lg:block" aria-hidden>
           <div className="absolute left-1/2 top-0 h-5 w-px -translate-x-1/2 bg-border" />
-          <div className="absolute left-[16.6667%] right-[16.6667%] top-5 h-px bg-border" />
+          <div className="absolute left-[12.5%] right-[12.5%] top-5 h-px bg-border" />
           {STEM_X.map((x, i) => {
             const id = c.branches[i].id;
             const on = selected === id;
@@ -94,10 +95,10 @@ export function ApiCommunicationMap({
             );
           })}
         </div>
-        <div className="mx-auto my-3 h-5 w-px bg-border sm:hidden" aria-hidden />
+        <div className="mx-auto my-3 h-5 w-px bg-border lg:hidden" aria-hidden />
 
         {/* branches */}
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {c.branches.map((b) => (
             <BranchCard
               key={b.id}

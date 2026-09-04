@@ -15,6 +15,7 @@ import { ApiOverviewLesson } from './what-is-an-api/ApiOverviewLesson';
 import { RestLesson } from './rest-api/RestLesson';
 import { WhLesson } from './webhooks/WhLesson';
 import { GqlLesson } from './graphql/GqlLesson';
+import { GrpcLesson } from './grpc/GrpcLesson';
 
 /**
  * Maps a topic slug to an optional interactive experience rendered above the
@@ -33,6 +34,7 @@ export const topicExperiences: Record<string, ComponentType<{ locale: Locale }>>
   'rest-api': RestLesson,
   webhooks: WhLesson,
   graphql: GqlLesson,
+  grpc: GrpcLesson,
   databases: DbLesson,
   'cap-theorem': CapLesson,
   'data-storage': DsLesson,
